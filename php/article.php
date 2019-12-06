@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Contact | E-Shopper</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/prettyPhoto.css" rel="stylesheet">
-    <link href="css/price-range.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/responsive.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prettyPhoto.css" rel="stylesheet">
+    <link href="../css/price-range.css" rel="stylesheet">
+    <link href=".//css/animate.css" rel="stylesheet">
+	<link href="../css/main.css" rel="stylesheet">
+	<link href="../css/responsive.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -122,7 +125,7 @@
                                     </ul>
                                 </li> 
 								
-								<li><a href="contact-us.html">Contact</a></li>
+								<li><a href="contact-us.html">Contactez-nous</a></li>
 							</ul>
 						</div>
 					</div>
@@ -140,45 +143,68 @@
     	<div class="bg">
 	    	<div class="row">    		
 	    		<div class="col-sm-12">    			   			
-					<h2 class="title text-center">Contact <strong>Us</strong></h2>    			    				    				
-					<div id="gmap" class="contact-map">
+					<h2 class="title text-center">Ajout<strong>Article</strong></h2>    			    				    				
+					
+						<div class="col-sm-6 col-sm-offset-3">
+	    			<div class="contact-form" class="col-md-offset">
+	    				<h2 class="title text-center">Ajout</h2>
+	    				<div class="status alert alert-success" style="display: none"></div>
+				    	<form id="main-contact-form" method="post" action="ajout_article.php"   class="contact-form row" name="contact-form" >
+				            <div class="form-group col-md-6">
+				                <input type="text" name="nom"  class="form-control" required="required" placeholder="Nom">
+				            </div>
+				            <div class="form-group col-md-6">
+				                <input type="text" name="article_description" class="form-control" required="required" placeholder="Article description">
+				            </div>
+				            <div class="form-group col-md-12">
+				                <input type="text" name="marque" class="form-control" required="required" placeholder="marque">
+				            </div>
+				            <div class="form-group col-md-12">
+				                <input type="text" name="categorie" class="form-control" required="required" placeholder="categorie">
+				            </div>
+				            <div class="form-group col-md-12">
+				                <input type="text" name="founisseur" class="form-control" required="required" placeholder="founisseur">
+				            </div>
+				           <div class="form-group col-md-6">
+				                <input type="text" name="prix" class="form-control" required="required" placeholder="Prix">
+				            </div>
+				            
+				            <div class="form-group col-md-6">
+				                <input type="text" name="remise" class="form-control" required="required" placeholder="Remise">
+				            </div>  
+				            <div class="form-group col-md-12">
+				                <input type="text" name="ttc" class="form-control" required="required" placeholder="TTC">
+				            </div>                              
+				            <div class="form-group col-md-12">
+				               <input style="background-color: #004d99; border : #004d99;" type="submit" class="btn btn-primary" value="valider" name="registerart">
+                                <input style="background-color: #004d99; border : #004d99; float: right;" type="reset" class="btn btn-primary" value="actualiser">
+				            </div>
+				           
+				        </form>
+	    			</div>
+	    		</div>
 					</div>
 				</div>			 		
 			</div>    	
+
     		<div class="row">  	
 	    		<div class="col-sm-8">
 	    			<div class="contact-form">
-	    				<h2 class="title text-center">Get In Touch</h2>
+	    				<h2 class="title text-center">Localisation</h2>
 	    				<div class="status alert alert-success" style="display: none"></div>
-				    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-				            <div class="form-group col-md-6">
-				                <input type="text" name="name" class="form-control" required="required" placeholder="Name">
-				            </div>
-				            <div class="form-group col-md-6">
-				                <input type="email" name="email" class="form-control" required="required" placeholder="Email">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <input type="text" name="subject" class="form-control" required="required" placeholder="Subject">
-				            </div>
-				            <div class="form-group col-md-12">
-				                <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Your Message Here"></textarea>
-				            </div>                        
-				            <div class="form-group col-md-12">
-				                <input type="submit" name="submit" class="btn btn-primary pull-right" value="Submit">
-				            </div>
-				        </form>
-	    			</div>
+				    	
+				    </div>		    			
 	    		</div>
 	    		<div class="col-sm-4">
 	    			<div class="contact-info">
 	    				<h2 class="title text-center">Contact Info</h2>
 	    				<address>
-	    					<p>E-Shopper Inc.</p>
-							<p>935 W. Webster Ave New Streets Chicago, IL 60614, NY</p>
-							<p>Newyork USA</p>
-							<p>Mobile: +2346 17 38 93</p>
-							<p>Fax: 1-714-252-0026</p>
-							<p>Email: info@e-shopper.com</p>
+	    					<p>E-Boutique Inc.</p>
+							<p>45 avenue des états unis</p>
+							<p>Versailles  France</p>
+							<p>Mobile: +33 00000000</p>
+							<p>Fax: +33 1 1111111</p>
+							<p>Email: Boutique@e-boutique.com</p>
 	    				</address>
 	    				<div class="social-networks">
 	    					<h2 class="title text-center">Social Networking</h2>
@@ -218,7 +244,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe1.png" alt="" />
+										<img src="../images/home/iframe1.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -233,7 +259,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe2.png" alt="" />
+										<img src="../images/home/iframe2.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -248,7 +274,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe3.png" alt="" />
+										<img src="../images/home/iframe3.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -263,7 +289,7 @@
 							<div class="video-gallery text-center">
 								<a href="#">
 									<div class="iframe-img">
-										<img src="images/home/iframe4.png" alt="" />
+										<img src="../images/home/iframe4.png" alt="" />
 									</div>
 									<div class="overlay-icon">
 										<i class="fa fa-play-circle-o"></i>
@@ -276,7 +302,7 @@
 					</div>
 					<div class="col-sm-3">
 						<div class="address">
-							<img src="images/home/map.png" alt="" />
+							<img src="../images/home/map.png" alt="" />
 							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
 						</div>
 					</div>
@@ -363,14 +389,22 @@
 	
 
   
-    <script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src="js/gmaps.js"></script>
-	<script src="js/contact.js"></script>
-	<script src="js/price-range.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/jquery.prettyPhoto.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/jquery.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<script type="../text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="../text/javascript" src="js/gmaps.js"></script>
+	<script src="../js/contact.js"></script>
+	<script src="../js/price-range.js"></script>
+    <script src="../js/jquery.scrollUp.min.js"></script>
+    <script src="../js/jquery.prettyPhoto.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
