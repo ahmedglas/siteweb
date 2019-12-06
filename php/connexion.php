@@ -1,15 +1,10 @@
 <?php
 
-//connnexion à la BD
-
-		try
-		{
-			$bdd = new PDO('mysql:host=localhost;dbname=projet;charset=utf8', 'root', '');
-		}
-		catch (Exception $e)
-		{
-        	die('Erreur : ' . $e->getMessage());
-		} 
-
+//connect to MYSQL
+$con = mysqli_connect('localhost','root','','projet');
+//Test connexion 
+if (mysqli_connect_errno()) {
+	echo 'Failled to connect to MYSQL: '.$mysqli_connect_errno();
+}
 
 ?>
