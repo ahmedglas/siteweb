@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +67,12 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="index.php?logout"><i class="fa fa-user"></i> <?php 
+								if (isset($_SESSION['user_login_status']) AND $_SESSION['user_login_status'] == 1)
+								
+								echo $_SESSION['user_email'];
+								else echo "Account";
+								?></a></li>
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
@@ -78,81 +84,103 @@
 			</div>
 		</div><!--/header-middle-->
 	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-9">
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html" class="active">Login</a></li> 
-                                    </ul>
-                                </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header-bottom-->
-	</header><!--/header-->
+		
 	
-	<section id="form"><!--form-->
+	<section id=""><!--form-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
+						<?php
+									// show potential errors / feedback (from login object)
+									if (isset($login)) {
+										if ($login->errors) {
+											foreach ($login->errors as $error) {
+												echo $error;
+											}
+										}
+										if ($login->messages) {
+											foreach ($login->messages as $message) {
+												echo $message;
+											}
+										}
+									}
+									?>
+						<form method="post" action="index.php" name="loginform">
+
+				<label for="login_input_email">email</label>
+					<input id="login_input_email" class="login_input" type="text" name="user_email" required />
+
+					<label for="login_input_password">Password</label>
+					<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required />
 							<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in
 							</span>
-							<button type="submit" class="btn btn-default">Login</button>
+							<button type="submit" name ="login" class="btn btn-default">Login</button>
 						</form>
 					</div><!--/login form-->
 				</div>
 				<div class="col-sm-1">
 					<h2 class="or">OR</h2>
 				</div>
+			
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name"/>
-							<input type="email" placeholder="Email Address"/>
-							<input type="password" placeholder="Password"/>
-							<button type="submit" class="btn btn-default">Signup</button>
-						</form>
+							<?php
+									// show potential errors / feedback (from registration object)
+									if (isset($registration)) {
+										if ($registration->errors) {
+											foreach ($registration->errors as $error) {
+												echo $error;
+											}
+										}
+										if ($registration->messages) {
+											foreach ($registration->messages as $message) {
+												echo $message;
+											}
+										}
+									}
+									?>
+						<form method="post" action="registration.php" name="registerform">
+
+						<!-- the user name input field uses a HTML5 pattern check -->
+						<label for="login_input_username">Username (only letters and numbers, 2 to 64 characters)</label>
+						<input id="login_input_username" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required="">
+						<label for="login_input_nom">NOM</label>
+						<input id="login_input_nom" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_nom" required="">
+						<label for="login_input_prenom">PRENOM</label>
+						<input id="login_input_prenom" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_prenom" required="">
+						<!-- the email input field uses a HTML5 email type check -->
+						<label for="login_input_sexe">sexe</label>
+						<select id="login_input_sexe" class="login_input" type="text" name="user_sexe" required="">
+							<option value="Homme">Homme </option>
+							<option value="Femme">Femme </option>
+						</select> <br><br>
+						<label for="login_input_email">User's email</label>
+						<input id="login_input_email" class="login_input" type="email" name="user_email" required="">
+					
+						<label for="login_input_password_new">Password (min. 6 characters)</label>
+						<input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required="" autocomplete="off">
+					
+						<label for="login_input_password_repeat">Repeat password</label>
+						<input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required="" autocomplete="off">
+						<label for="login_input_cin">CIN</label>
+						<input id="login_input_cin" class="login_input" type="text" pattern="+[0-9]{2}\([0-9]\))?[0-9]{8}" name="user_cin" required="">
+						<label for="login_input_tel">telephone</label>
+						<input id="login_input_tel" class="login_input" type="text" pattern="+[0-9]{2}\([0-9]\))?[0-9]{10}" name="user_tel" required="">
+						<label for="login_input_adresse">adresse</label>
+						<input id="login_input_adresse" class="login_input" type="text"  name="user_adresse" required="">
+						<label for="login_input_code_postale">code postale</label>
+						<input id="login_input_code_postale" class="login_input" type="text" pattern="+[0-9]{2,6}" name="user_code_postale" required="">
+						<input type="submit" class="btn btn-default" name="register" value="Register">
+
+					
+					</form>
 					</div><!--/sign up form-->
+				</div>
 				</div>
 			</div>
 		</div>
