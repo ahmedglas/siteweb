@@ -63,15 +63,25 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Compte</a></li>
+							<?php
+								session_start();
+								if (isset($_SESSION['user_name']) && $_SESSION['user_login_status'] == 1) {
+									echo '<li><a href="edit-account.php"><i class="fa fa-user"></i>'.$_SESSION['user_name']  .'</a></li>';
+								} else {
+									echo '<li><a href="page_login.php"><i class="fa fa-user"></i>Mon Compte</a></li>';
+									
+								}
+								?>
+								
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Carte</a></li>
 								<?php
 								
 								if (isset($_SESSION['user_login_status']) && $_SESSION['user_login_status'] == 1) {
-									echo '<li><a href="page_login.php"><i class="fa fa-lock"></i> Connexion</a></li>';
+									echo '<li><a href="index.php?logout"><b>déconnection</b></a></li>';
+									
 								} else {
-									echo '<li><a href="page_login.php?logout"><b>déconnection</b></a></li>';
+									echo '<li><a href="page_login.php"><i class="fa fa-lock"></i> Connexion</a></li>';
 								}
 								?>
 								
