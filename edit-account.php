@@ -23,7 +23,7 @@
 </head><!--/head-->
 
 <body >
-		<header id="header"><!--header-->
+<header id="header"><!--header-->
 		<div class="header_top"><!--header_top-->
 			<div class="container">
 				<div class="row">
@@ -54,24 +54,45 @@
 				<div class="row">
 					<div class="col-md-4 clearfix">
 						<div class="logo pull-left">
-							<a href="page_acceuil.php"><img src="images/home/logo.png" alt=""></a>
+							<a href="page_acceuil.php"><img src="images/home/logo.png" alt="" /></a>
 						</div>
 					
 					</div>
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="index.php?logout"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
+							<?php
+								session_start();
+								if (isset($_SESSION['user_name']) && $_SESSION['user_login_status'] == 1) {
+									echo '<li><a href="edit-account.php"><i class="fa fa-user"></i>'.$_SESSION['user_name']  .'</a></li>';
+								} else {
+									echo '<li><a href="page_login.php"><i class="fa fa-user"></i>Mon Compte</a></li>';
+									
+								}
+								?>
+								
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Carte</a></li>
-								<li><a href="login.html"><i class="fa fa-lock"></i> Connexion</a></li>
+								<?php
+								
+								if (isset($_SESSION['user_login_status']) && $_SESSION['user_login_status'] == 1) {
+									echo '<li><a href="index.php?logout"><b>déconnection</b></a></li>';
+									
+								} else {
+									echo '<li><a href="page_login.php"><i class="fa fa-lock"></i> Connexion</a></li>';
+								}
+								?>
+								
 							</ul>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div><!--/header-middle-->
+	
+	</header><!--/header-->
+
+		</div><!--/header_top-->
 	
 		
 	
@@ -177,17 +198,6 @@ Mot De Passe  (min. 6  characters)</label>
 		<div class="footer-top">
 			<div class="container">
 				
-			</div>
-		</div>
-		
-		
-		
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="row">
-					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-				</div>
 			</div>
 		</div>
 		
