@@ -102,23 +102,57 @@
 				<h3>What would you like to do next?</h3>
 				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
 			</div>
+							<?php
+				
+				require_once("./php/config/db.php");
+				
+								$user_id=$_SESSION['user_id'];
+				$sql = "SELECT *
+                        FROM users
+						WHERE user_id = '" . $user_id . "';";
+						$res=mysqli_query($con,$sql);
+						$row = mysqli_fetch_array($res);
+						
+						$sql2="SELECT SUM((a.prix-a.remise)*e.qte) as totale
+						from article a ,apartient e ,commande c 
+						where a.id_article=e.id_article and e.commande_id=c.commande_id
+						and c.user_id= '" . $user_id . "';";
+						$cmd=mysqli_query($con,$sql2);
+						$row2 = mysqli_fetch_array($cmd);
+						
+						$sql3 ="SELECT count(*) as nbr
+						from commande c
+						where c.user_id ='".$user_id."';";
+
+				
+				$nb=mysqli_query($con,$sql3);
+				$row3 = mysqli_fetch_array($nb);
+				$string = "";
+					$string .= '<ul>
+								 	<li>Nom<span>'.$row['user_nom'].'</span></li>
+									<li>Prenom :<span>'.$row['user_prenom'].'</span></li>
+									<li>Adresse Mail :<span>'.$row['user_email'].'</span></li>
+									<li>Numéro tel :<span>'.$row['user_tel'].'</span></li>
+						<li>Adresse :<span>'.$row['user_adresse'].'</span></li>
+						<li>Code Postale :<span>'.$row['user_code_postale'].'</span></li>
+
+						<li>Sexe :<span>'.$row['user_sexe'].'</span></li>
+										</ul>'
+
+				
+					
+				
+				
+				
+				?>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="chose_area">
 						<ul class="user_option">
-                            <li> 
+                            
     <div class="total_area" style="margin-bottom:2px;">
-						<ul>
-							<li>Nom<span>$59</span></li>
-							<li>Prenom :<span>$2</span></li>
-							<li>Adresse Mail :<span>Free</span></li>
-							<li>Numéro tel :<span>$61</span></li>
-<li>Adresse :<span>1 nahj zno9 ras zb</span></li>
-<li>Code Postale :<span>78190</span></li>
-
-<li>Pays :<span>France</span></li>
-						</ul>
-							
+						
+							<?php echo $string ?>
 							
 					</div>
     </li>
@@ -145,7 +179,7 @@
 								
 							</li>
 							<li class="single_field zip-field">
-								<label>Zip Code:</label>
+								<label>Code Postale:</label>
 								<input type="text" name="user_code_postale">
 							</li>
 
@@ -161,8 +195,8 @@
 
     
 						</ul>
-                    <input type="submit" class="btn btn-default update"  />
-                        <a class="btn btn-default check_out" href="">Continue</a>
+                    <button type="submit" class="btn btn-default update"  > update</button>
+                        
 </form>
 					</div>
 				</div>
@@ -182,10 +216,11 @@ Mot De Passe  (min. 6  characters)</label>
 							
 							<button type="submit" name="login" class="btn btn-default">update</button>
 						</form>
-					</div> </li>							<li>Cart Sub Total <span>$59</span></li>
-							<li>Eco Tax <span>$2</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>$61</span></li>
+					</div> </li>
+							<li>payment effectuer <span><?php  if($row2['totale']) echo $row2['totale']." euro";
+							else echo "0 euro";?></span></li>
+							<li>nombre de commande <span><?php echo $row3['nbr'];?></span></li>
+							
 						</ul>
 					</div>
 				</div>
