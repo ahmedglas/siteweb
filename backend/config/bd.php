@@ -6,5 +6,5 @@ $con = mysqli_connect('localhost','root','','projet');
 if (mysqli_connect_errno()) {
 	echo 'Failled to connect to MYSQL: '.$mysqli_connect_errno();
 }
-
+ 
 ?>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 07 déc. 2019 à 22:06
--- Version du serveur :  5.7.17
--- Version de PHP :  5.6.30
+-- Généré le :  Dim 15 déc. 2019 à 00:20
+-- Version du serveur :  10.1.36-MariaDB
+-- Version de PHP :  7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -52,12 +52,23 @@ CREATE TABLE `article` (
   `id_article` int(10) NOT NULL,
   `artdesc` varchar(500) DEFAULT NULL,
   `marque` varchar(20) DEFAULT NULL,
+  `image` varchar(200) DEFAULT NULL,
   `categorie` varchar(30) NOT NULL,
-  `id_fournisseur` int(11) NOT NULL,
-  `prix` varchar(10) NOT NULL,
+  `id_fournisseur` int(11) DEFAULT NULL,
+  `prix` int(10) NOT NULL,
   `remise` int(3) DEFAULT '0',
   `ttc` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `article`
+--
+
+INSERT INTO `article` (`id_article`, `artdesc`, `marque`, `image`, `categorie`, `id_fournisseur`, `prix`, `remise`, `ttc`) VALUES
+(27, 'iphone x', 'iphone', 'iphoneX.jpg', 'telephone', 2, 900, 0, 0),
+(28, 'iphone X max', 'iphone', 'iphoneX.jpg', 'telephone', 4, 900, 100, 800),
+(29, 'iphone 11 pro', 'iphone', 'iphone11 pro.jpg', 'telephone', 1, 1600, 200, 1400),
+(30, 'samsung s10', 'samsung', 'samsung s10.jpg', 'telephone', 3, 1500, 200, 1300);
 
 -- --------------------------------------------------------
 
@@ -246,8 +257,16 @@ CREATE TABLE `stock_article` (
   `id_couleur` int(10) NOT NULL,
   `id_article` int(10) NOT NULL,
   `qte` int(11) DEFAULT NULL,
-  `description` varchar(40) DEFAULT NULL
+  `description` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `stock_article`
+--
+
+INSERT INTO `stock_article` (`id_capacite`, `id_couleur`, `id_article`, `qte`, `description`) VALUES
+(3, 1, 29, 50, 'ajout de iphone 11 pro de couleur Rouge a 64 Gb'),
+(4, 3, 30, 100, 'ajout samsung s10 de couleur Rose a 128 Gb');
 
 -- --------------------------------------------------------
 
@@ -274,10 +293,10 @@ INSERT INTO `type_livraison` (`id_type`, `nbjours`, `nomservice`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `utilisateur`
+-- Structure de la table `users`
 --
 
-CREATE TABLE `utilisateur` (
+CREATE TABLE `users` (
   `utilid` int(10) NOT NULL,
   `nom` char(10) NOT NULL,
   `poste` char(10) NOT NULL,
@@ -291,10 +310,10 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `utilisateur`
+-- Déchargement des données de la table `users`
 --
 
-INSERT INTO `utilisateur` (`utilid`, `nom`, `poste`, `quartier`, `avatar`, `sexe`, `numero`, `email`, `matricule`, `password`) VALUES
+INSERT INTO `users` (`utilid`, `nom`, `poste`, `quartier`, `avatar`, `sexe`, `numero`, `email`, `matricule`, `password`) VALUES
 (1, 'adam', 'admin', '', '', 'M', 11111111, 'adam@gmail.com', 'ADAM004662', 'adam');
 
 -- --------------------------------------------------------
@@ -429,9 +448,9 @@ ALTER TABLE `type_livraison`
   ADD PRIMARY KEY (`id_type`);
 
 --
--- Index pour la table `utilisateur`
+-- Index pour la table `users`
 --
-ALTER TABLE `utilisateur`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`utilid`);
 
 --
@@ -442,97 +461,71 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- AUTO_INCREMENT pour la table `boutique`
 --
 ALTER TABLE `boutique`
   MODIFY `id_boutique` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pour la table `capacite`
 --
 ALTER TABLE `capacite`
   MODIFY `id_capacite` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT pour la table `commande`
 --
 ALTER TABLE `commande`
   MODIFY `commande_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT pour la table `couleur`
 --
 ALTER TABLE `couleur`
   MODIFY `id_couleur` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pour la table `facture`
 --
 ALTER TABLE `facture`
   MODIFY `facid` int(10) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
   MODIFY `id_fournisseur` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT pour la table `livraison`
 --
 ALTER TABLE `livraison`
   MODIFY `id_livraison` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT pour la table `type_livraison`
 --
 ALTER TABLE `type_livraison`
   MODIFY `id_type` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
--- AUTO_INCREMENT pour la table `utilisateur`
+-- AUTO_INCREMENT pour la table `users`
 --
-ALTER TABLE `utilisateur`
+ALTER TABLE `users`
   MODIFY `utilid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- Contraintes pour les tables déchargées
 --
-
---
--- Contraintes pour la table `apartient`
---
-ALTER TABLE `apartient`
-  ADD CONSTRAINT `apartient_ibfk_1` FOREIGN KEY (`commande_id`) REFERENCES `commande` (`commande_id`),
-  ADD CONSTRAINT `apartient_ibfk_2` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`);
 
 --
 -- Contraintes pour la table `article`
 --
 ALTER TABLE `article`
   ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`id_fournisseur`) REFERENCES `fournisseur` (`id_fournisseur`);
-
---
--- Contraintes pour la table `commande`
---
-ALTER TABLE `commande`
-  ADD CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`utilid`) REFERENCES `utilisateur` (`utilid`),
-  ADD CONSTRAINT `commande_ibfk_2` FOREIGN KEY (`facid`) REFERENCES `facture` (`facid`),
-  ADD CONSTRAINT `commande_ibfk_3` FOREIGN KEY (`id_livraison`) REFERENCES `livraison` (`id_livraison`);
-
---
--- Contraintes pour la table `livraison`
---
-ALTER TABLE `livraison`
-  ADD CONSTRAINT `livraison_ibfk_1` FOREIGN KEY (`id_type`) REFERENCES `type_livraison` (`id_type`);
-
---
--- Contraintes pour la table `livrer`
---
-ALTER TABLE `livrer`
-  ADD CONSTRAINT `livrer_ibfk_1` FOREIGN KEY (`id_livraison`) REFERENCES `livraison` (`id_livraison`),
-  ADD CONSTRAINT `livrer_ibfk_2` FOREIGN KEY (`id_boutique`) REFERENCES `boutique` (`id_boutique`);
-
---
--- Contraintes pour la table `stock_article`
---
-ALTER TABLE `stock_article`
-  ADD CONSTRAINT `stock_article_ibfk_1` FOREIGN KEY (`id_capacite`) REFERENCES `capacite` (`id_capacite`),
-  ADD CONSTRAINT `stock_article_ibfk_2` FOREIGN KEY (`id_couleur`) REFERENCES `couleur` (`id_couleur`),
-  ADD CONSTRAINT `stock_article_ibfk_3` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

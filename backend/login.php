@@ -145,7 +145,7 @@ include('config/bd.php');
 
   $password =    $_POST['password'];
      
-     $sel_user="SELECT * FROM utilisateur WHERE email='$email' AND password ='$password' ";
+     $sel_user="SELECT * FROM users WHERE email='$email' AND password ='$password' ";
      
      $run_user = mysqli_query($con, $sel_user);
 

@@ -8,16 +8,15 @@
              </h3>
              </div>
                <ul class="list-group">
-                <li class="list-group-item"><a style="text-align: center;" href="ajoute.php"><h1>
+                <li class="list-group-item"><a style="text-align: center;" href="article.php"><h1>
                 <i class="fa fa-plus-circle" aria-hidden="true"></i></h1></a></li>
-                <li class="list-group-item"><a style="text-align: center;" href="supprim.php"><h1>
+                <li class="list-group-item"><a style="text-align: center;" href="liste_article.php"><h1>
                <i class="fa fa-trash" aria-hidden="true"></i></h1></a></li>
-                <li class="list-group-item"><a style="text-align: center;" href="modif.php"><h1>
+                <li class="list-group-item"><a style="text-align: center;" href="liste_article.php"><h1>
                <i class="fa fa-pencil-square-o" aria-hidden="true"></i></h1></a></li>
-                <li class="list-group-item"><a style="text-align: center;" href="liste.php"><h1>
+                <li class="list-group-item"><a style="text-align: center;" href="liste_article.php"><h1>
                <i class="fa fa-list-alt" aria-hidden="true"></i></h1></a></li>
-                <li class="list-group-item"><a style="text-align: center;" href="compta.php"><h1>
-               <i class="fa fa-btc" aria-hidden="true"></i></h1></a></li>
+               
             
             </ul>
            </div>

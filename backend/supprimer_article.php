@@ -52,12 +52,7 @@ if (!isset($_SESSION['email'])) {
               background-repeat: no-repeat;
               background-attachment: fixed;" class="login">
     
-  <?php require'includes/functions.php';
-  require('includes/_alert.php');
-  require('includes/_flash.php');
- require('config/db.php');
 
-   ?>
 
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -74,7 +69,7 @@ if (!isset($_SESSION['email'])) {
           <ul class="nav navbar-nav navbar-right">
             <li style="padding-top: 10px;">
              <form action="search.php" method="GET" enctype="multipart/form-data">
-                   <input style="border: solid 1px #001a33; border-radius: 3em;" type="search" name="supprimer" placeholder="search">
+             	 <input style="border: solid 1px #001a33; border-radius: 3em;" type="search" name="supprimer" placeholder="search">
 
                    <button style="background-color: #001a33; color: white; width: 30px; height: 30px; border: solid 0.5px #001a33; border-radius: 100%;" type="submit" name="search" value="search"><i class="fa fa-search" aria-hidden="true"></i></button>
               </form> 
@@ -87,70 +82,51 @@ if (!isset($_SESSION['email'])) {
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+<br>
+<h4 align="center">Cette suppression est irreversible <i style="color: red;" class="fa fa-exclamation-triangle" aria-hidden="true"></i>, voulez-vous continuer?</h4> 
 
-<div  class="container">
-  <p style="text-align: center; color: #004d99 !important;">trouver un utilisateur et le supprimer <i class="fa fa-trash" aria-hidden="true"></i></p>
-  <hr>
-  <?php include'dashboard.php'; ?>
-<div class="col-sm-11 col-sm-offset-0">
-              
-                <div  style="border: solid 1px #004d99;"  class="panel panel-default">
-                <div  style="border: solid 1px #004d99;"  class="panel-heading ">
-                 <h4 style="text-align: center;"><a style="float: left; color: white; font-size: 15px;" href="index.php"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retour</a> Retirer un membre <i class="fa fa-trash" aria-hidden="true"></i></h4><br></h1>
-               </div>
-                <hr>
-        <div id="main-content">
+<form accept="" method="post">
 
-         <div class="container">
-          <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-          <?php
-         if (isset($_GET['supp_membre'])) {
-          include('supp_membre.php');
-         }?>
-           </div>
-        </div>
-            
-      </div>
-      
-
+ <div class="col-sm-6">
+    <div class="form-group">
+<input type="submit" class="btn btn-danger" class="form-control" name="oui" value="Oui,supprimer">
     </div>
-      
-   </div><!-- /.container -->
 
-       
 </div>
 
+ <div class="col-sm-6">
+    <div class="form-group">
+<input type="submit" class="btn btn-default" class="form-control" name="Non" value="Non! merci!">
+    </div>
+   </div>
 
-          </div>
-          </div>
+</form>
+<?php   
+include('config/bd.php');
+$delete_id = $_GET['mdfa'];
+if (isset($_POST['oui'])) {
+	
+$delete_m = "delete from article where id_article='$delete_id' ";
 
-        </div>
+$run_delete = mysqli_query($con, $delete_m);
 
-  <div class="bcg" class="container">
-        
-            
+    echo "<script>alert('article supprimer!!')</script>";
 
- 
-           
-           
-            <div class="col-sm-4 col-sm-offset-4">
-                
-                <p style="color:#004d99; text-align: center;"  > &copy; projet web 2019</p>
-                <marquee direction="down">
-                <p style="color:#004d99; text-align: center;"  >SSite pour le projet de BD L3 Informatique  </p></marquee>
-            </div>
-         
-        </div>  
-    
-      </body>
-      </html>
+	echo "<script>window.open('liste_article.php?','_self')</script>";
 
 
-<script src="libs/parsley.min.js"></script>
-</body>
-</html>
+}if (isset($_POST['Non'])) {
+
+
+echo "<script>alert('opération de suppression de votre compte annulée!!')</script>";
+    echo "<script>window.open('liste.php','_self')</script>";
+
+
+
+
+
+}
+
+?>
 
 <?php } ?>
-     
-

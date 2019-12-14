@@ -10,7 +10,6 @@ if (!isset($_SESSION['email'])) {
   include'includes/functions.php';
    include('config/db.php');
   
-
 if (isset($_POST['registeruser'])) {
 
   global $con;
@@ -40,12 +39,12 @@ if (isset($_POST['registeruser'])) {
   
 
 //connect to MYSQL
-$con = mysqli_connect('localhost','root','','projet');
-//Test connexion 
-
+    
+    
+    $con = mysqli_connect('localhost','root','','projet');
   
 
-
+    include('config/bd.php');
   
    $insert = " INSERT INTO users (nom, poste, quartier,avatar, sexe, numero, email, matricule, password) VALUES('$nom','$poste','$quartier','$avatar','$sex','$numero','$email','$matricule','$password')";
 
@@ -53,7 +52,7 @@ $con = mysqli_connect('localhost','root','','projet');
 
   
 if ($run) {
-   echo "<script>alert('membre ajouté avec succés!')</script>";
+   echo "<script>alert('Utilisateur ajouté avec succés!')</script>";
    echo "<script>window.open('liste.php','_self')</script>";
    
 

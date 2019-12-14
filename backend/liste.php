@@ -130,17 +130,17 @@ if (!isset($_SESSION['email'])) {
      $i = 0;
      while ($row_pro=mysqli_fetch_array($run_pro)) {
 
-      $id_membre = $row_pro['id_membre'];
+      $id_membre = $row_pro['utilid'];
       $nom = $row_pro['nom'];
       $poste = $row_pro['poste'];
       $avatar = $row_pro['avatar'];
-       $quartier = $row_pro['quartier'];
-      $sex = $row_pro['sex'];
+      $quartier = $row_pro['quartier'];
+      $sex = $row_pro['sexe'];
       $numero = $row_pro['numero'];
       $email = $row_pro['email'];
        $matricule = $row_pro['matricule'];
       $password = $row_pro['password'];
-      $date = $row_pro['date'];
+    
       
 
       $i ++;

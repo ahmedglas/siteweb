@@ -1,10 +1,71 @@
-<?php 
+  
+ <?php 
 session_start();
 if (!isset($_SESSION['email'])) {
    echo "<script>window.open('login.php','_self')</script>";
 }else{
 
  ?>
+
+
+<?php 
+
+   include'includes/functions.php';
+   include('config/db.php');
+
+if (isset($_POST['registerart'])) {
+
+
+
+  $description = $_POST['description'];
+
+  $marque  = $_POST['marque'];
+  
+
+  $avatar= $_FILES['avatar']['name'];
+  $avatar_tmp = $_FILES['avatar']['tmp_name'];
+
+  move_uploaded_file($avatar_tmp,"image_article/$avatar");
+
+  $categorie = $_POST['categorie'];
+
+  $fournisseur = $_POST['fournisseur'];
+
+  $prix = $_POST['prix'];
+
+  $remise  = $_POST['remise'];
+
+  $ttc = $_POST['ttc'];
+  
+  
+     $con = mysqli_connect('localhost','root','','projet');
+
+   include('config/bd.php');
+  
+   $insert2 = "INSERT INTO article (artdesc, marque, image, categorie, id_fournisseur, prix, remise, ttc) VALUES('$description','$marque','$avatar','$categorie','$fournisseur','$prix','$remise','$ttc')";
+
+   $run= mysqli_query($con, $insert2);
+
+  
+if ($run) {
+   echo "<script>alert('article ajouté avec succés!')</script>";
+   echo "<script>window.open('liste_article.php','_self')</script>";
+
+}
+else{
+
+   printf("Errormessage: %s\n", $con->error);
+  echo "<script>alert('Echec d'enregistrement!')</script>";
+  
+  
+}
+}
+
+
+?>
+
+<?php } ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -55,7 +116,7 @@ if (!isset($_SESSION['email'])) {
   <?php require'includes/functions.php';
   require('includes/_alert.php');
   require('includes/_flash.php');
- require('config/db.php');
+  require('config/bd.php');
 
    ?>
 
@@ -113,12 +174,12 @@ if (!isset($_SESSION['email'])) {
             <div class="panel-body">
       
                 <!--nom-->
-           <form data-parsley-validate method="post" enctype="multipart/form-data">
+           <form data-parsley-validate method="post"  enctype="multipart/form-data">
              <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label class="control-label" for="nom" >Nom<span class="text-danger">*</span></label>
-                  <input type="text" placeholder="nom..." name="nom" id="nom" class="form-control" value="nom" required="required">
+                  <label class="control-label" for="description" >description<span class="text-danger">*</span></label>
+                  <input type="text" placeholder="description..." name="description" id="description" class="form-control" value="" required="required">
                 </div>
                 
               </div>
@@ -126,8 +187,8 @@ if (!isset($_SESSION['email'])) {
              
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label class="control-label" for="poste" >Description article<span class="text-danger">*</span></label>
-                  <input type="text" placeholder="post..." name="poste" id="poste" value="poste" class="form-control" required="required">
+                  <label class="control-label" for="Marque" >Marque<span class="text-danger">*</span></label>
+                  <input type="text" placeholder="marque..." name="marque" id="marque" value="" class="form-control" required="required">
                 </div>
                 
               </div>
@@ -138,8 +199,8 @@ if (!isset($_SESSION['email'])) {
              <div class="row">
                <div class="col-md-6">
                  <div class="form-group">
-                   <label for="avatar">cImage article</label>
-                   <input type="file" name="avatar" id="avatar" required="required">
+                   <label for="avatar">Image article</label>
+                   <input type="file" name="avatar" id="avatar" >
                  </div>
                </div>
              </div>
@@ -147,8 +208,8 @@ if (!isset($_SESSION['email'])) {
              <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="control-label" for="quartier" >Marque<span class="text-danger">*</span></label>
-                  <input type="text" placeholder="quartier..." name="quartier" id="quartier" value="quartier" class="form-control" required="required">
+                  <label class="control-label" for="categorie" >Categorie<span class="text-danger">*</span></label>
+                  <input type="text" placeholder="telephone..." name="categorie" id="categorie" value="" class="form-control" required="required">
                 </div>
                 
               </div>
@@ -156,14 +217,30 @@ if (!isset($_SESSION['email'])) {
                <!--sex-->
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="control-label" for="sex" >Categorie<span class="text-danger">*</span></label>
-                  <select name="sex" id="sex" class="form-control" required="required">
-                    <option>
-                      Ordinateur
-                    </option>
-                    <option>
-                      Telephone
-                    </option>
+                  <label class="control-label" for="fournisseur" >fournisseur<span class="text-danger">*</span></label>
+                  <select name="fournisseur" id="fournisseur" type="text"  class="form-control" value="" required="required">
+                     <option>Choix des founisseurs</option>
+                        <?php
+                        try
+                        {
+                          $con= new PDO('mysql:host=localhost;dbname=projet;charset=latin1','root','');
+                        }
+                        catch (Exception $e)
+                        {
+                          die('Erreur : ' . $e->getMessage());
+                        }
+                        $reponse = $con->query('SELECT id_fournisseur,fournisseurname FROM fournisseur');
+                         
+                        while ($donnees = $reponse->fetch())
+                        {
+                        ?>
+                        <option value=<?php echo $donnees['id_fournisseur'];?>><?php echo $donnees['fournisseurname'];?></option>
+                         
+                        <?php 
+                        }
+                         
+                        ?>
+
                   </select>
                 </div>
               </div>
@@ -176,8 +253,8 @@ if (!isset($_SESSION['email'])) {
              <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="control-label" for="numero" >Prix<span class="text-danger">*</span></label>
-                  <input type="text"  name="numero" id="numero" value="numero" class="form-control" placeholder="0">
+                  <label class="control-label" for="prix" >Prix<span class="text-danger">*</span></label>
+                  <input type="text"  name="prix" id="prix" value="" class="form-control" placeholder="0">
                 </div>
                 
               </div>
@@ -186,8 +263,8 @@ if (!isset($_SESSION['email'])) {
              
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="control-label" for="email" >Remise<span class="text-danger">*</span></label>
-                  <input type="email"  name="email" id="email" class="form-control" value="email" placeholder="0">
+                  <label class="control-label" for="Remise" >Remise<span class="text-danger">*</span></label>
+                  <input type="text"  name="remise" id="remise" class="form-control" value="" placeholder="0">
                 </div>
                 
               </div>
@@ -199,8 +276,8 @@ if (!isset($_SESSION['email'])) {
               <div class="col-sm-6">
                 <div class="form-group">
                 
-                  <label class="control-label" for="matricule" >TTC<span class="text-danger">*</span></label>
-                    <input type="text"  name="matricule" id="matricule" value="matricule" class="form-control" placeholder="REMISE" />
+                  <label class="control-label" for="TTC" >TTC<span class="text-danger">*</span></label>
+                    <input type="text"  name="ttc" id="ttc" value="" class="form-control" placeholder="0" />
               
                 </div>
                 
@@ -213,7 +290,7 @@ if (!isset($_SESSION['email'])) {
 
               <!--vile-->
              
-             <input style="background-color: #004d99; border : #004d99;" type="submit" class="btn btn-primary" value="valider" name="registeruser">
+             <input style="background-color: #004d99; border : #004d99;" type="submit" class="btn btn-primary" value="valider" name="registerart">
               <input style="background-color: #004d99; border : #004d99; float: right;" type="reset" class="btn btn-primary" value="actualiser">
            </form> 
 
@@ -254,60 +331,4 @@ if (!isset($_SESSION['email'])) {
 </body>
 </html>
 
-<?php
-  include'includes/functions.php';
-
-  include('config/bd.php');
-
-if (isset($_POST['registeruser'])) {
-
-  global $con;
-
-  $nom = $_POST['nom'];
-
-  $poste  = $_POST['poste'];
-
-  $quartier = $_POST['quartier'];
-
-  $avatar= $_FILES['avatar']['name'];
-  $avatar_tmp = $_FILES['avatar']['tmp_name'];
-
-  move_uploaded_file($avatar_tmp,"images/$avatar");
-
-  $sex = $_POST['sex'];
-
-  $numero = $_POST['numero'];
-
-  $email  = $_POST['email'];
-
-  $matricule = $_POST['matricule'];
-
-  $password  = $_POST['password'];
-  
-  
-
-
-  echo
-   $insert = " INSERT INTO users (nom, poste, quartier,avatar, sex, numero, email, matricule, password) VALUES('$nom','$poste','$quartier','$avatar','$sex','$numero','$email','$matricule','$password')";
-
-$run = mysqli_query($con, $insert);
-
-  
-if ($run) {
-   echo "<script>alert('membre ajouté avec succés!')</script>";
-   echo "<script>window.open('liste.php','_self')</script>";
-   
-
-}else{
-  echo "<script>alert('Echec!')</script>";
-   echo "<script>window.open('ajoute.php','_self')</script>";
-}
-
-}
-
-  
-?>
-
-<?php } ?>
-     
 

@@ -1,7 +1,7 @@
 <?php
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'wstorage');
+define('DB_NAME', 'projet');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 

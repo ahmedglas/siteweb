@@ -107,13 +107,13 @@ if (!isset($_SESSION['email'])) {
         
        $requete_user = $_GET['supprimer'];
 
-      $get_m = "SELECT * FROM users WHERE nom LIKE '%$requete_user%'";
+      $get_m = "SELECT * FROM article WHERE description LIKE '%$requete_user%'";
   $run_m = mysqli_query($con, $get_m);
   if ($row_m=mysqli_fetch_array($run_m)) {
 
-      $id_membre = $row_m['id_membre'];
+      $id_article = $row_m['id_article'];
 
-      $nom = $row_m['nom'];
+      $description = $row_m['description'];
  
       $avatar = $row_m['avatar'];
       
