@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 15 déc. 2019 à 14:50
--- Version du serveur :  10.1.36-MariaDB
--- Version de PHP :  7.2.11
+-- Généré le :  Dim 15 déc. 2019 à 18:14
+-- Version du serveur :  10.4.8-MariaDB
+-- Version de PHP :  7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -55,8 +55,8 @@ CREATE TABLE `article` (
   `image` varchar(200) DEFAULT NULL,
   `categorie` varchar(30) NOT NULL,
   `id_fournisseur` int(11) DEFAULT NULL,
-  `prix` varchar(10) NOT NULL,
-  `remise` int(3) DEFAULT '0',
+  `prix` int(10) NOT NULL,
+  `remise` int(3) DEFAULT 0,
   `ttc` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -65,12 +65,10 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`id_article`, `artdesc`, `marque`, `image`, `categorie`, `id_fournisseur`, `prix`, `remise`, `ttc`) VALUES
-(3, 'samsung S10', 'Samsung', 'samsung s10.jpg', 'telephone', 2, '1200', 0, 1200),
-(4, 'macbook Air', 'apple', 'mac air.jpg', 'ordinateur', 1, '1000', 100, 900),
-(5, 'iphone 11', 'apple', 'iphone 11.jpg', 'telephone', 3, '1100', 50, 1050),
-(6, 'macbook pro', 'apple', 'mack pro.jpg', 'ordinateur', 3, '1000', 0, 0),
-(7, 'ordinateur Hp', 'hp', 'hp.jpg', 'ordinateur', 1, '700', 0, 700),
-(8, 'samsung S9', 'samsung', 'samsung-galaxy-s9_001.jpg', 'telephone', 4, '900', 100, 800);
+(3, 'iphone x', 'iphone', 'iphoneX.jpg', 'telephone', 2, 900, 0, 0),
+(7, 'samsung s10', 'samsung', 'samsung s10.jpg', 'telephone', 3, 1500, 200, 1300),
+(29, 'iphone 11 pro', 'iphone', 'iphone11 pro.jpg', 'telephone', 1, 1600, 200, 1400),
+(30, 'iphone X max', 'iphone', 'iphoneX.jpg', 'telephone', 4, 900, 100, 800);
 
 -- --------------------------------------------------------
 
@@ -129,21 +127,21 @@ INSERT INTO `capacite` (`id_capacite`, `taille`) VALUES
 
 CREATE TABLE `commande` (
   `commande_id` int(10) NOT NULL,
-  `utilid` int(10) NOT NULL,
-  `facid` int(10) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `etatcmd` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en coure de traitement',
   `id_livraison` int(10) NOT NULL,
   `cmddate` date NOT NULL,
   `totalcmd` varchar(20) NOT NULL,
-  `cmddescription` char(30) DEFAULT NULL
+  `cmddescription` char(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `commande`
 --
 
-INSERT INTO `commande` (`commande_id`, `utilid`, `facid`, `id_livraison`, `cmddate`, `totalcmd`, `cmddescription`) VALUES
-(1, 1, NULL, 1, '2018-12-02', '20', 'cmd de macbook Air'),
-(2, 2, NULL, 2, '2017-11-17', '10', 'CMD Iphone 11 rose de 64 GB');
+INSERT INTO `commande` (`commande_id`, `user_id`, `etatcmd`, `id_livraison`, `cmddate`, `totalcmd`, `cmddescription`) VALUES
+(1, 1, 'en coure de traitement', 1, '2018-12-02', '20', ''),
+(2, 2, 'en coure de traitement', 2, '2017-11-17', '10', 'CMD Iphone 11 rose de 64 GB');
 
 -- --------------------------------------------------------
 
@@ -165,22 +163,6 @@ INSERT INTO `couleur` (`id_couleur`, `couleur`) VALUES
 (2, 'Noir'),
 (3, 'Rose'),
 (4, 'Grise');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `facture`
---
-
-CREATE TABLE `facture` (
-  `facid` int(10) NOT NULL,
-  `datefact` varchar(10) NOT NULL,
-  `prixdebase` int(10) NOT NULL,
-  `tva` int(11) NOT NULL DEFAULT '20',
-  `remise` int(11) DEFAULT '0',
-  `totalht` int(11) DEFAULT NULL,
-  `totalttc` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -259,7 +241,7 @@ CREATE TABLE `stock_article` (
   `id_couleur` int(10) NOT NULL,
   `id_article` int(10) NOT NULL,
   `qte` int(11) DEFAULT NULL,
-  `description` varchar(40) DEFAULT NULL
+  `description` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -267,8 +249,8 @@ CREATE TABLE `stock_article` (
 --
 
 INSERT INTO `stock_article` (`id_capacite`, `id_couleur`, `id_article`, `qte`, `description`) VALUES
-(6, 4, 4, 100, 'macbook Air de 1 To de couleur Grise'),
-(3, 3, 3, 200, 'samsung S10 rose de 64 Gb');
+(3, 1, 29, 50, 'ajout de iphone 11 pro de couleur Rouge a 64 Gb'),
+(4, 3, 30, 100, 'ajout samsung s10 de couleur Rose a 128 Gb');
 
 -- --------------------------------------------------------
 
@@ -299,25 +281,26 @@ INSERT INTO `type_livraison` (`id_type`, `nbjours`, `nomservice`) VALUES
 --
 
 CREATE TABLE `users` (
-  `utilid` int(10) NOT NULL,
-  `nom` char(10) NOT NULL,
-  `poste` char(10) NOT NULL,
-  `quartier` varchar(30) NOT NULL,
-  `avatar` varchar(15) NOT NULL,
-  `sexe` varchar(10) NOT NULL,
-  `numero` int(20) NOT NULL,
-  `email` varchar(15) NOT NULL,
-  `matricule` varchar(15) NOT NULL,
-  `password` char(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `user_id` int(11) NOT NULL COMMENT 'auto incrementing user_id of each user, unique index',
+  `user_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s name, unique',
+  `user_password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s password in salted and hashed format',
+  `user_email` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'user''s email, unique',
+  `user_nom` varchar(46) COLLATE utf8_unicode_ci NOT NULL,
+  `user_prenom` varchar(46) COLLATE utf8_unicode_ci NOT NULL,
+  `user_sexe` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `user_tel` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `user_cin` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `user_adresse` varchar(121) COLLATE utf8_unicode_ci NOT NULL,
+  `user_code_postale` varchar(8) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='user data';
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`utilid`, `nom`, `poste`, `quartier`, `avatar`, `sexe`, `numero`, `email`, `matricule`, `password`) VALUES
-(1, 'adam', 'admin', '', '', 'M', 11111111, 'adam@gmail.com', 'ADAM004662', 'adam'),
-(2, 'Boukar', 'secretaire', '12 rue paris', '', 'Homme', 755975752, 'admin@gmail.com', 'hdfjkjf', 'adam');
+INSERT INTO `users` (`user_id`, `user_name`, `user_password_hash`, `user_email`, `user_nom`, `user_prenom`, `user_sexe`, `user_tel`, `user_cin`, `user_adresse`, `user_code_postale`) VALUES
+(1, 'ahmeddd', '$2y$10$RQxUIM3solZ5b6jQA.BHreTgwWUCdh/4VuSlMb6FDvvTYIUrw2eIq', 'a@a.a', 'ahmed', 'saa', 'Homme', '1234567890', '12345678', '16 rue ben mitticha', '1006'),
+(2, 'ahmedscon', '$2y$10$Un8tjLJGoDYlAcG6uBL13uUMCetVTtwvDY4F5Xg0LUWaIUFD/TbIa', 'ahmed.esssaadi@gmail.com', 'Ahmed', 'Saadi', 'Homme', '1234567890', '12345678', '1 Square Gérard Philipe', '78190');
 
 -- --------------------------------------------------------
 
@@ -326,7 +309,8 @@ INSERT INTO `users` (`utilid`, `nom`, `poste`, `quartier`, `avatar`, `sexe`, `nu
 -- (Voir ci-dessous la vue réelle)
 --
 CREATE TABLE `vue_article` (
-`artdesc` varchar(500)
+`id_article` int(10)
+,`artdesc` varchar(500)
 ,`marque` varchar(20)
 ,`couleur` char(10)
 ,`capacite` char(10)
@@ -354,7 +338,7 @@ CREATE TABLE `vue_article_telephone` (
 --
 DROP TABLE IF EXISTS `vue_article`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article`  AS  select `a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where ((`s`.`id_article` = `a`.`id_article`) and (`s`.`id_couleur` = `c`.`id_couleur`) and (`s`.`id_capacite` = `k`.`id_capacite`)) order by `s`.`qte` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article`  AS  select `a`.`id_article` AS `id_article`,`a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where `s`.`id_article` = `a`.`id_article` and `s`.`id_couleur` = `c`.`id_couleur` and `s`.`id_capacite` = `k`.`id_capacite` order by `s`.`qte` desc ;
 
 -- --------------------------------------------------------
 
@@ -363,7 +347,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vue_article_telephone`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article_telephone`  AS  select `a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where ((`s`.`id_article` = `a`.`id_article`) and (`s`.`id_couleur` = `c`.`id_couleur`) and (`s`.`id_capacite` = `k`.`id_capacite`) and (`a`.`marque` = 'telephone')) order by `s`.`qte` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article_telephone`  AS  select `a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where `s`.`id_article` = `a`.`id_article` and `s`.`id_couleur` = `c`.`id_couleur` and `s`.`id_capacite` = `k`.`id_capacite` and `a`.`marque` = 'telephone' order by `s`.`qte` desc ;
 
 --
 -- Index pour les tables déchargées
@@ -400,21 +384,14 @@ ALTER TABLE `capacite`
 --
 ALTER TABLE `commande`
   ADD PRIMARY KEY (`commande_id`),
-  ADD KEY `utilid` (`utilid`),
-  ADD KEY `facid` (`facid`),
-  ADD KEY `id_livraison` (`id_livraison`);
+  ADD KEY `id_livraison` (`id_livraison`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `couleur`
 --
 ALTER TABLE `couleur`
   ADD PRIMARY KEY (`id_couleur`);
-
---
--- Index pour la table `facture`
---
-ALTER TABLE `facture`
-  ADD PRIMARY KEY (`facid`);
 
 --
 -- Index pour la table `fournisseur`
@@ -454,7 +431,9 @@ ALTER TABLE `type_livraison`
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`utilid`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `user_name` (`user_name`),
+  ADD UNIQUE KEY `user_email` (`user_email`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -464,7 +443,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `boutique`
@@ -491,12 +470,6 @@ ALTER TABLE `couleur`
   MODIFY `id_couleur` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `facture`
---
-ALTER TABLE `facture`
-  MODIFY `facid` int(10) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
@@ -518,7 +491,7 @@ ALTER TABLE `type_livraison`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `utilid` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index', AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
