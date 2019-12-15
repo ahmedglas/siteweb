@@ -71,8 +71,8 @@
 								}
 								?>
 								
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Carte</a></li>
+								
+								<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> Carte</a></li>
 								<?php
 								
 								if (isset($_SESSION['user_login_status']) && $_SESSION['user_login_status'] == 1) {

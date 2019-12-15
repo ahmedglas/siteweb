@@ -46,8 +46,8 @@
 								}
 								?>
 								
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Carte</a></li>
+								
+								<li><a href="cart.php"><i class="fa fa-shopping-cart"></i> Carte</a></li>
 								<?php
 								
 								if (isset($_SESSION['user_login_status']) && $_SESSION['user_login_status'] == 1) {
@@ -84,8 +84,8 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.php">Products</a></li>
 										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
+										
+										<li><a href="cart.php">Cart</a></li> 
 										<li><a href="login.html">Login</a></li> 
                                     </ul>
                                 </li> 
@@ -94,10 +94,7 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
+					<!-- search bar-->
 					</div>
 				</div>
 			</div>
