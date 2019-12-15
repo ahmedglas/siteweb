@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 15 déc. 2019 à 15:55
+-- Généré le :  Dim 15 déc. 2019 à 18:14
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -65,10 +65,10 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`id_article`, `artdesc`, `marque`, `image`, `categorie`, `id_fournisseur`, `prix`, `remise`, `ttc`) VALUES
-(27, 'iphone x', 'iphone', 'iphoneX.jpg', 'telephone', 2, 900, 0, 0),
-(28, 'iphone X max', 'iphone', 'iphoneX.jpg', 'telephone', 4, 900, 100, 800),
+(3, 'iphone x', 'iphone', 'iphoneX.jpg', 'telephone', 2, 900, 0, 0),
+(7, 'samsung s10', 'samsung', 'samsung s10.jpg', 'telephone', 3, 1500, 200, 1300),
 (29, 'iphone 11 pro', 'iphone', 'iphone11 pro.jpg', 'telephone', 1, 1600, 200, 1400),
-(30, 'samsung s10', 'samsung', 'samsung s10.jpg', 'telephone', 3, 1500, 200, 1300);
+(30, 'iphone X max', 'iphone', 'iphoneX.jpg', 'telephone', 4, 900, 100, 800);
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,6 @@ INSERT INTO `capacite` (`id_capacite`, `taille`) VALUES
 -- Structure de la table `commande`
 --
 
-
 CREATE TABLE `commande` (
   `commande_id` int(10) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -141,7 +140,7 @@ CREATE TABLE `commande` (
 --
 
 INSERT INTO `commande` (`commande_id`, `user_id`, `etatcmd`, `id_livraison`, `cmddate`, `totalcmd`, `cmddescription`) VALUES
-(1, 1, 'valider', 1, '2018-12-02', '20', '<script>\r\n				\r\n				  var x = document.getElementById(\"message_cmd\").value;\r\n				</script>'),
+(1, 1, 'en coure de traitement', 1, '2018-12-02', '20', ''),
 (2, 2, 'en coure de traitement', 2, '2017-11-17', '10', 'CMD Iphone 11 rose de 64 GB');
 
 -- --------------------------------------------------------
@@ -310,7 +309,8 @@ INSERT INTO `users` (`user_id`, `user_name`, `user_password_hash`, `user_email`,
 -- (Voir ci-dessous la vue réelle)
 --
 CREATE TABLE `vue_article` (
-`artdesc` varchar(500)
+`id_article` int(10)
+,`artdesc` varchar(500)
 ,`marque` varchar(20)
 ,`couleur` char(10)
 ,`capacite` char(10)
@@ -338,7 +338,7 @@ CREATE TABLE `vue_article_telephone` (
 --
 DROP TABLE IF EXISTS `vue_article`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article`  AS  select `a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where `s`.`id_article` = `a`.`id_article` and `s`.`id_couleur` = `c`.`id_couleur` and `s`.`id_capacite` = `k`.`id_capacite` order by `s`.`qte` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vue_article`  AS  select `a`.`id_article` AS `id_article`,`a`.`artdesc` AS `artdesc`,`a`.`marque` AS `marque`,`c`.`couleur` AS `couleur`,`k`.`taille` AS `capacite`,`s`.`qte` AS `quantite` from (((`stock_article` `s` join `article` `a`) join `couleur` `c`) join `capacite` `k`) where `s`.`id_article` = `a`.`id_article` and `s`.`id_couleur` = `c`.`id_couleur` and `s`.`id_capacite` = `k`.`id_capacite` order by `s`.`qte` desc ;
 
 -- --------------------------------------------------------
 

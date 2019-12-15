@@ -146,7 +146,7 @@
 						if (isset($_SESSION['user_id']))
 						$user_id=$_SESSION['user_id'];
 						else $user_id=0;					
-					$sql = "SELECT a.artdesc , (a.prix - a.remise) as prix_remise ,a.prix , s.fournisseurname
+					$sql = "SELECT a.id_article ,a.artdesc , (a.prix - a.remise) as prix_remise ,a.prix , s.fournisseurname , a.image
 						from commande c ,apartient e , article a ,fournisseur s
 						where  a.id_article=e.id_article
 						and c.commande_id=e.commande_id
@@ -157,8 +157,7 @@
 						$tot =0;
 						$capnum=0;
 						$i=0;
-						if ($user_id==0)
-						echo "log in first";
+					
 									
 						while ($row=mysqli_fetch_array($res)) {
 							$four=$row['fournisseurname'];
@@ -166,13 +165,16 @@
 							$prix=$row['prix'];
 							$prix_remise=$row['prix_remise'];
 							$tot+=intval($row['prix']);
+							$img=$row['image'];
+							$id_article=$row['id_article'];
 							$i++;
 							
 					?>
 							<tr>
 								<td class="cart_product">
-									<a href=""><img src="images/cart/one.png" alt=""></a>
+									<a href="product-details.php?profil_views=<?php echo intval($id_article)?>"><img src="images/cart/<?php echo $img; ?>"></a>
 								</td>
+								
 								<td class="cart_description">
 									<h4><a href=""><?php echo $art?></a></h4>
 									<p><?php echo "Fournisseur: ".'<b> '.$four.'</b>' ?></p>
@@ -222,11 +224,7 @@
 							
 							<textarea id="messagecmd" placeholder="Notes about your order, Special Notes for Delivery" rows="3"></textarea>
 							</form>
-							<script>
-				print_r(document.getElementById("messagecmd"));
-				 
-				  document.cookie="message="+document.getElementById("messagecmd").value;
-				</script>'
+						
 						</div>
 				</div>
 				<?php
