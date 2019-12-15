@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 07 déc. 2019 à 17:16
+-- Généré le :  Dim 15 déc. 2019 à 15:55
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -52,30 +52,23 @@ CREATE TABLE `article` (
   `id_article` int(10) NOT NULL,
   `artdesc` varchar(500) DEFAULT NULL,
   `marque` varchar(20) DEFAULT NULL,
-  `id_fournisseur` int(11) NOT NULL,
-  `prix` varchar(10) NOT NULL,
+  `image` varchar(200) DEFAULT NULL,
+  `categorie` varchar(30) NOT NULL,
+  `id_fournisseur` int(11) DEFAULT NULL,
+  `prix` int(10) NOT NULL,
   `remise` int(3) DEFAULT 0,
-  `prixremise` int(5) DEFAULT NULL,
-  `artimd` varchar(100) DEFAULT NULL
+  `ttc` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `article`
 --
 
-INSERT INTO `article` (`id_article`, `artdesc`, `marque`, `id_fournisseur`, `prix`, `remise`, `prixremise`, `artimd`) VALUES
-(1, 'iphone 11 pro', 'Telephone', 4, '1000', 100, 900, 'iphone 11 '),
-(2, 'iphone 11', 'Telephone', 3, '800', 200, 600, 'iphone 11'),
-(3, 'Mackbook pro', 'Ordinateur', 1, '1200', 100, 1100, 'md1'),
-(4, 'Samsung S10', 'telephone', 1, '700', 50, 650, 'mds'),
-(5, 'Ordiateur Hp', 'Ordinateur', 1, '800', 100, 700, 'md5'),
-(6, 'Huawei', 'telephone', 1, '900', 0, 900, 'md7'),
-(7, 'Iphone 8 plus', 'Telephone', 2, '700', 0, NULL, 'iphone'),
-(8, 'IPhone 7 plus', 'telephone', 2, '600', 0, NULL, 'Iphone'),
-(9, 'Ihone 6s', 'Telephone', 4, '550', 0, NULL, 'IPHONE'),
-(10, 'Ihone 6c', 'telephone', 2, '600', 50, 550, 'iphone'),
-(11, 'Macbook Air', 'Ordinateur', 2, '1300', 100, 1200, 'Macbook AIR'),
-(12, 'iphone 11', 'Telephone', 3, '800', 200, 600, 'iphone 11');
+INSERT INTO `article` (`id_article`, `artdesc`, `marque`, `image`, `categorie`, `id_fournisseur`, `prix`, `remise`, `ttc`) VALUES
+(27, 'iphone x', 'iphone', 'iphoneX.jpg', 'telephone', 2, 900, 0, 0),
+(28, 'iphone X max', 'iphone', 'iphoneX.jpg', 'telephone', 4, 900, 100, 800),
+(29, 'iphone 11 pro', 'iphone', 'iphone11 pro.jpg', 'telephone', 1, 1600, 200, 1400),
+(30, 'samsung s10', 'samsung', 'samsung s10.jpg', 'telephone', 3, 1500, 200, 1300);
 
 -- --------------------------------------------------------
 
@@ -132,23 +125,24 @@ INSERT INTO `capacite` (`id_capacite`, `taille`) VALUES
 -- Structure de la table `commande`
 --
 
+
 CREATE TABLE `commande` (
   `commande_id` int(10) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `facid` int(10) DEFAULT NULL,
+  `etatcmd` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en coure de traitement',
   `id_livraison` int(10) NOT NULL,
   `cmddate` date NOT NULL,
   `totalcmd` varchar(20) NOT NULL,
-  `cmddescription` char(30) DEFAULT NULL
+  `cmddescription` char(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `commande`
 --
 
-INSERT INTO `commande` (`commande_id`, `user_id`, `facid`, `id_livraison`, `cmddate`, `totalcmd`, `cmddescription`) VALUES
-(1, 1, NULL, 1, '2018-12-02', '20', 'cmd de macbook Air'),
-(2, 2, NULL, 2, '2017-11-17', '10', 'CMD Iphone 11 rose de 64 GB');
+INSERT INTO `commande` (`commande_id`, `user_id`, `etatcmd`, `id_livraison`, `cmddate`, `totalcmd`, `cmddescription`) VALUES
+(1, 1, 'valider', 1, '2018-12-02', '20', '<script>\r\n				\r\n				  var x = document.getElementById(\"message_cmd\").value;\r\n				</script>'),
+(2, 2, 'en coure de traitement', 2, '2017-11-17', '10', 'CMD Iphone 11 rose de 64 GB');
 
 -- --------------------------------------------------------
 
@@ -170,22 +164,6 @@ INSERT INTO `couleur` (`id_couleur`, `couleur`) VALUES
 (2, 'Noir'),
 (3, 'Rose'),
 (4, 'Grise');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `facture`
---
-
-CREATE TABLE `facture` (
-  `facid` int(10) NOT NULL,
-  `datefact` varchar(10) NOT NULL,
-  `prixdebase` int(10) NOT NULL,
-  `tva` int(11) NOT NULL DEFAULT 20,
-  `remise` int(11) DEFAULT 0,
-  `totalht` int(11) DEFAULT NULL,
-  `totalttc` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -264,7 +242,7 @@ CREATE TABLE `stock_article` (
   `id_couleur` int(10) NOT NULL,
   `id_article` int(10) NOT NULL,
   `qte` int(11) DEFAULT NULL,
-  `description` varchar(40) DEFAULT NULL
+  `description` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -272,24 +250,8 @@ CREATE TABLE `stock_article` (
 --
 
 INSERT INTO `stock_article` (`id_capacite`, `id_couleur`, `id_article`, `qte`, `description`) VALUES
-(1, 3, 1, 50, 'iphone 11 rose'),
-(6, 4, 3, 100, 'Macbook pro gris de 1 To'),
-(5, 2, 3, 50, 'Macbook ro Noir de 500 Gb'),
-(6, 2, 5, 200, 'HP noir de 1 to de capacite'),
-(4, 2, 6, 500, 'Huawei noir de 128 Gb'),
-(3, 4, 4, 30, 'Samsung S10 gris de 64gb'),
-(5, 3, 5, 150, 'Hp rose de 500 gb'),
-(3, 3, 4, 70, 'Samsung S10 rose de 64Gb'),
-(1, 4, 10, 30, 'Iphone 6c grise de 16Gb'),
-(2, 2, 10, 10, 'Iphone 6c noir de 32Gb'),
-(3, 1, 8, 50, 'Iphone 7 plus  64Gb'),
-(2, 2, 8, 100, 'Iphone 7 plus Noir de 32 Gb'),
-(3, 1, 7, 200, 'iphone 8 plus Rouge 64 Gb'),
-(2, 4, 7, 200, 'Iphone 8 plus Gris de 32 Gb'),
-(3, 3, 7, 150, 'iphone 8 plus Rose 64 Gb'),
-(6, 1, 5, 700, 'Hp rouge de 1 To'),
-(6, 4, 11, 300, 'Macbook Air gris de 1 To'),
-(6, 3, 11, 500, 'Macbook Air Rose de 1 To ');
+(3, 1, 29, 50, 'ajout de iphone 11 pro de couleur Rouge a 64 Gb'),
+(4, 3, 30, 100, 'ajout samsung s10 de couleur Rose a 128 Gb');
 
 -- --------------------------------------------------------
 
@@ -338,10 +300,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_password_hash`, `user_email`, `user_nom`, `user_prenom`, `user_sexe`, `user_tel`, `user_cin`, `user_adresse`, `user_code_postale`) VALUES
-(1, 'aaa', '$2y$10$Am.0ndnXhf7tn13lEgtuIehl8aYkQCelKZR0o9N2OidLQTKOxT1uC', 'a@a.a', '', '', '', '', '', '', ''),
-(2, 'ahmed', '$2y$10$ewZ6RE7cneG14qy5xYQiguKgNaS9cfKwz6OuB/kZ3LdQ0LSmC8HAq', 'a@aa.a', '', '', '', '', '', '', ''),
-(7, 'ahmedscon', '$2y$10$Un8tjLJGoDYlAcG6uBL13uUMCetVTtwvDY4F5Xg0LUWaIUFD/TbIa', 'ahmed.esssaadi@gmail.com', 'Ahmed', 'Saadi', 'Homme', '1234567890', '12345678', '1 Square Gérard Philipe', '78190'),
-(11, 'ahmeddd', '$2y$10$RQxUIM3solZ5b6jQA.BHreTgwWUCdh/4VuSlMb6FDvvTYIUrw2eIq', 'a@h.h', 'ahmed', 'saa', 'Homme', '1234567890', '12345678', '16 rue ben mitticha', '1006');
+(1, 'ahmeddd', '$2y$10$RQxUIM3solZ5b6jQA.BHreTgwWUCdh/4VuSlMb6FDvvTYIUrw2eIq', 'a@a.a', 'ahmed', 'saa', 'Homme', '1234567890', '12345678', '16 rue ben mitticha', '1006'),
+(2, 'ahmedscon', '$2y$10$Un8tjLJGoDYlAcG6uBL13uUMCetVTtwvDY4F5Xg0LUWaIUFD/TbIa', 'ahmed.esssaadi@gmail.com', 'Ahmed', 'Saadi', 'Homme', '1234567890', '12345678', '1 Square Gérard Philipe', '78190');
 
 -- --------------------------------------------------------
 
@@ -424,7 +384,6 @@ ALTER TABLE `capacite`
 --
 ALTER TABLE `commande`
   ADD PRIMARY KEY (`commande_id`),
-  ADD KEY `facid` (`facid`),
   ADD KEY `id_livraison` (`id_livraison`),
   ADD KEY `user_id` (`user_id`);
 
@@ -433,12 +392,6 @@ ALTER TABLE `commande`
 --
 ALTER TABLE `couleur`
   ADD PRIMARY KEY (`id_couleur`);
-
---
--- Index pour la table `facture`
---
-ALTER TABLE `facture`
-  ADD PRIMARY KEY (`facid`);
 
 --
 -- Index pour la table `fournisseur`
@@ -490,7 +443,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_article` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `boutique`
@@ -517,12 +470,6 @@ ALTER TABLE `couleur`
   MODIFY `id_couleur` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT pour la table `facture`
---
-ALTER TABLE `facture`
-  MODIFY `facid` int(10) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
@@ -544,45 +491,17 @@ ALTER TABLE `type_livraison`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index', AUTO_INCREMENT=12;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'auto incrementing user_id of each user, unique index', AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `apartient`
---
-ALTER TABLE `apartient`
-  ADD CONSTRAINT `apartient_ibfk_1` FOREIGN KEY (`commande_id`) REFERENCES `commande` (`commande_id`),
-  ADD CONSTRAINT `apartient_ibfk_2` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`);
-
---
 -- Contraintes pour la table `article`
 --
 ALTER TABLE `article`
   ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`id_fournisseur`) REFERENCES `fournisseur` (`id_fournisseur`);
-
---
--- Contraintes pour la table `livraison`
---
-ALTER TABLE `livraison`
-  ADD CONSTRAINT `livraison_ibfk_1` FOREIGN KEY (`id_type`) REFERENCES `type_livraison` (`id_type`);
-
---
--- Contraintes pour la table `livrer`
---
-ALTER TABLE `livrer`
-  ADD CONSTRAINT `livrer_ibfk_1` FOREIGN KEY (`id_livraison`) REFERENCES `livraison` (`id_livraison`),
-  ADD CONSTRAINT `livrer_ibfk_2` FOREIGN KEY (`id_boutique`) REFERENCES `boutique` (`id_boutique`);
-
---
--- Contraintes pour la table `stock_article`
---
-ALTER TABLE `stock_article`
-  ADD CONSTRAINT `stock_article_ibfk_1` FOREIGN KEY (`id_capacite`) REFERENCES `capacite` (`id_capacite`),
-  ADD CONSTRAINT `stock_article_ibfk_2` FOREIGN KEY (`id_couleur`) REFERENCES `couleur` (`id_couleur`),
-  ADD CONSTRAINT `stock_article_ibfk_3` FOREIGN KEY (`id_article`) REFERENCES `article` (`id_article`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -34,7 +34,7 @@ require_once("header.php");
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
-						<h2>Login to your account</h2>
+						<h2>Se connecter </h2>
 						<?php
 									// show potential errors / feedback (from login object)
 									if (isset($login)) {
@@ -59,7 +59,7 @@ require_once("header.php");
 					<input id="login_input_password" class="login_input" type="password" name="user_password" autocomplete="off" required />
 							<span>
 								<input type="checkbox" class="checkbox"> 
-								Keep me signed in
+								Restez-connecté !
 							</span>
 							<button type="submit" name ="login" class="btn btn-default">Login</button>
 						</form>
@@ -90,7 +90,7 @@ require_once("header.php");
 						<form method="post" action="registration.php" name="registerform">
 
 						<!-- the user name input field uses a HTML5 pattern check -->
-						<label for="login_input_username">Username (only letters and numbers, 2 to 64 characters)</label>
+						<label for="login_input_username">Username (letters et numéro, 2 to 64 caractères)</label>
 						<input id="login_input_username" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_name" required="">
 						<label for="login_input_nom">NOM</label>
 						<input id="login_input_nom" class="login_input" type="text" pattern="[a-zA-Z0-9]{2,64}" name="user_nom" required="">
@@ -102,24 +102,26 @@ require_once("header.php");
 							<option value="Homme">Homme </option>
 							<option value="Femme">Femme </option>
 						</select> <br><br>
-						<label for="login_input_email">User's email</label>
+						<label for="login_input_email"> Email</label>
 						<input id="login_input_email" class="login_input" type="email" name="user_email" required="">
 					
-						<label for="login_input_password_new">Password (min. 6 characters)</label>
+						<label for="login_input_password_new">Password (min. 6 caractères)</label>
 						<input id="login_input_password_new" class="login_input" type="password" name="user_password_new" pattern=".{6,}" required="" autocomplete="off">
 					
-						<label for="login_input_password_repeat">Repeat password</label>
+						<label for="login_input_password_repeat">confirmation password</label>
 						<input id="login_input_password_repeat" class="login_input" type="password" name="user_password_repeat" pattern=".{6,}" required="" autocomplete="off">
 						<label for="login_input_cin">CIN</label>
 						<input id="login_input_cin" class="login_input" type="text" pattern="+[0-9]{2}\([0-9]\))?[0-9]{8}" name="user_cin" required="">
-						<label for="login_input_tel">telephone</label>
+						<label for="login_input_tel">Téléphone</label>
 						<input id="login_input_tel" class="login_input" type="text" pattern="+[0-9]{2}\([0-9]\))?[0-9]{10}" name="user_tel" required="">
-						<label for="login_input_adresse">adresse</label>
+						<label for="login_input_adresse">Adresse</label>
 						<input id="login_input_adresse" class="login_input" type="text"  name="user_adresse" required="">
-						<label for="login_input_code_postale">code postale</label>
+						<label for="login_input_code_postale">Code postale</label>
 						<input id="login_input_code_postale" class="login_input" type="text" pattern="+[0-9]{2,6}" name="user_code_postale" required="">
-						<input type="submit" class="btn btn-default" name="register" value="Register">
-
+						<input type="submit" class="btn btn-default" style="background-color: #ec971f;" name="register" value="Register">
+						
+						
+ 
 					
 					</form>
 					</div><!--/sign up form-->
@@ -137,7 +139,7 @@ require_once("header.php");
 					<div class="col-sm-2">
 						<div class="companyinfo">
 							<h2><span>e</span>-shopper</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+							<p>projet BD UVSQ web-site ecommerce	</p>
 						</div>
 					</div>
 					<div class="col-sm-7">
@@ -204,87 +206,14 @@ require_once("header.php");
 					<div class="col-sm-3">
 						<div class="address">
 							<img src="images/home/map.png" alt="" />
-							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+							<p>versaille uvsq l3 informatique</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="footer-widget">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Service</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Online Help</a></li>
-								<li><a href="">Contact Us</a></li>
-								<li><a href="">Order Status</a></li>
-								<li><a href="">Change Location</a></li>
-								<li><a href="">FAQ’s</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Quock Shop</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">T-Shirt</a></li>
-								<li><a href="">Mens</a></li>
-								<li><a href="">Womens</a></li>
-								<li><a href="">Gift Cards</a></li>
-								<li><a href="">Shoes</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Policies</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Terms of Use</a></li>
-								<li><a href="">Privecy Policy</a></li>
-								<li><a href="">Refund Policy</a></li>
-								<li><a href="">Billing System</a></li>
-								<li><a href="">Ticket System</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="">Company Information</a></li>
-								<li><a href="">Careers</a></li>
-								<li><a href="">Store Location</a></li>
-								<li><a href="">Affillate Program</a></li>
-								<li><a href="">Copyright</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
 		
-		<div class="footer-bottom">
-			<div class="container">
-				<div class="row">
-					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-				</div>
-			</div>
-		</div>
 		
 	</footer><!--/Footer-->
 	
