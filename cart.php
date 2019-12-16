@@ -54,7 +54,7 @@
 				<div class="row">
 					<div class="col-md-4 clearfix">
 						<div class="logo pull-left">
-							<a href="page_acceuil.php"><img src="images/home/logo.png" alt="" /></a>
+							<a href="index.php"><img src="images/home/logo.png" alt="" /></a>
 						</div>
 					
 					</div>
@@ -104,7 +104,7 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="page_acceuil.php" class="active">Home</a></li>
+								<li><a href="index.php" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="shop.php">Products</a></li>
