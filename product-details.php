@@ -132,25 +132,26 @@
 							require_once("./php/config/db.php");
    
 						$id_article = $_GET['profil_views'];
-						$sql = "SELECT quantite,a.artdesc,a.id_article,a.marque,a.image,a.categorie,
-						f.fournisseurname,a.ttc 
-						 from vue_article v ,article a , fournisseur f where 
-						v.id_article=a.id_article
+						echo "hadha ana".$id_article;
+						$sql = "SELECT * from vue_article v ,article a , fournisseur f where 
+						and v.id_article=a.id_article
 						and a.id_fournisseur=f.id_fournisseur and v.id_article='".$id_article."';";
 						$res = mysqli_query($con, $sql);
 						$i = 0;
-						
+						print_r($res);
 						while ($row_pro = mysqli_fetch_array($res)) {
 						$id_article = $row_pro['id_article'];
 						$description = $row_pro['artdesc'];
 						$marque = $row_pro['marque'];
 						$img = $row_pro['image'];
 						$categorie = $row_pro['categorie'];
-						$fournisseur = $row_pro['fournisseurname'];
+						$fournisseur = $row_pro['id_fournisseur'];
+						$prix = $row_pro['prix'];
+						$remise = $row_pro['remise'];
 						$ttc = $row_pro['ttc'];
-						$qte = $row_pro['quantite'];
 						
-						$i ++; 
+						
+						$i ++; }
 
 								?>
 					
@@ -158,7 +159,7 @@
 						<div class="product-details"><!--product-details-->
 							<div class="col-sm-5">
 								<div class="view-product">
-									<img src="images/product-details/<?php echo $img?>" alt=""/>
+									<img src="images/product-details/<?php echo $img?>" alt="">
 									
 								</div>
 								<div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -166,29 +167,19 @@
 									  <!-- Wrapper for slides -->
 										<div class=" carousel-inner">
 											<div class="item active">
-											<a href=""><img src="images/product-details/<?php echo "1".$img?>" alt=""></a>
-											<a href=""><img src="images/product-details/<?php echo "2".$img?>" alt=""></a>
-											  
-											  
-											 
-											
+											  <a href=""><img src="images/product-details/" alt=""></a>
+											  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+											  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
 											</div>
 											<div class="item">
-											
-											<a href=""><img src="images/product-details/<?php echo "3".$img?>" alt=""></a>
-											  <a href=""><img src="images/product-details/<?php echo "4".$img?>" alt=""></a>
-											  
-											 
-											
-											 
+											  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+											  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+											  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
 											</div>
 											<div class="item">
-											
-											<a href=""><img src="images/product-details/<?php echo "1".$img?>" alt=""></a>
-											  <a href=""><img src="images/product-details/<?php echo "2".$img?>" alt=""></a>
-											 
-											
-											 
+											  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+											  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+											  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
 											</div>
 											
 										</div>
@@ -206,28 +197,114 @@
 							<div class="col-sm-7">
 								<div class="product-information"><!--/product-information-->
 									<img src="images/product-details/new.jpg" class="newarrival" alt="">
-									<h2><?php echo $description?></h2>
-									<p>fournisseur : <?php echo $fournisseur?> </p>
-									
+									<h2>Anne Klein Sleeveless Colorblock Scuba</h2>
+									<p>Web ID: 1089772</p>
+									<img src="images/product-details/rating.png" alt="">
 									<span>
-										<span>prix : <?php echo $ttc?> </span>
-										<label>Quantity:  </label>
-										
-										<input type="number" value="1" name="qtt">
-										<a href="add_carte.php?<?php echo 'id_article='.$id_article.'&quantite=1'?>">
-										<button type="submit" class="btn btn-fefault cart" >
+										<span>US $59</span>
+										<label>Quantity:</label>
+										<input type="text" value="3">
+										<button type="button" class="btn btn-fefault cart">
 											<i class="fa fa-shopping-cart"></i>
 											Add to cart
-										</button></a>
-										
+										</button>
 									</span>
-									<p><b>Availability:</b><?php if($qte>0) echo '<b>'.$qte."articles disponible".'</b>'; else '<b>'."non disponible".'</b>'?></p>
-									<p><b>marque:</b><?php echo $marque?> </p>
-									</form>
+									<p><b>Availability:</b> In Stock</p>
+									<p><b>Brand:</b> E-SHOPPER</p>
 								</div><!--/product-information-->
 							</div>
-						<?php } ?>
 						</div><!--/product-details-->
+						
+						<div class="recommended_items"><!--recommended_items-->
+							<h2 class="title text-center">recommended items</h2>
+							
+							<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner">
+									<div class="item">	
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend1.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend2.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend3.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="item active">	
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend1.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend2.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="product-image-wrapper">
+												<div class="single-products">
+													<div class="productinfo text-center">
+														<img src="images/home/recommend3.jpg" alt="">
+														<h2>$56</h2>
+														<p>Easy Polo Black Edition</p>
+														<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+									<i class="fa fa-angle-left"></i>
+								  </a>
+								  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+									<i class="fa fa-angle-right"></i>
+								  </a>			
+							</div>
+						</div><!--/recommended_items-->
 						
 					</div>
 				</div>
